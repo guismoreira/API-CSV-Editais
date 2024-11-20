@@ -22,4 +22,4 @@ ENV ENVIRONMENT=PROD
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "build/libs/app.jar"]
+CMD ["java", "-jar", "build/libs/concurso-0.0.1-SNAPSHOT.jar"]
