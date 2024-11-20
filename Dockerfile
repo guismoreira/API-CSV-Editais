@@ -12,13 +12,13 @@ WORKDIR /my-project
 
 COPY . /my-project
 
-RUN chmod +x ./gradlew
-
 RUN python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip && \
     /venv/bin/pip install requests beautifulsoup4 pandas
 
-RUN ./gradlew clean build
+RUN chmod +x ./gradlew && ./gradlew clean build
+
+ENV ENVIRONMENT=PROD
 
 EXPOSE 8080
 
