@@ -8,16 +8,16 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL https://get.gradle.org/distributions/gradle-7.6.2-bin.zip -o gradle.zip && \
-    unzip gradle.zip -d /opt && \
-    rm gradle.zip && \
-    ln -s /opt/gradle-7.6.2/bin/gradle /usr/bin/gradle
-
 WORKDIR /app
 
 COPY . /app
 
 RUN if [ -f requirements.txt ]; then python3 -m pip install -r requirements.txt; fi
+
+# Usar imagem do Gradle diretamente
+FROM gradle:7.2-jdk21 AS gradle-builder
+
+COPY --from=gradle-builder /opt/gradle /opt/gradle
 
 RUN gradle build
 
