@@ -16,7 +16,7 @@ RUN python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip && \
     /venv/bin/pip install requests beautifulsoup4 pandas
 
-RUN chmod +x ./gradlew && ./gradlew clean build
+RUN chmod +x gradlew && ./gradlew clean build
 
 ENV ENVIRONMENT=PROD
 
