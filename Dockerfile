@@ -12,6 +12,8 @@ WORKDIR /my-project
 
 COPY . /my-project
 
+RUN chmod +x ./gradlew
+
 RUN python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip && \
     /venv/bin/pip install requests beautifulsoup4 pandas
