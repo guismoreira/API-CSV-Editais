@@ -1,5 +1,7 @@
 FROM ubuntu:20.04 AS build
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get install -y \
     openjdk-21-jdk \
     python3 \
@@ -8,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     bash \
     gradle \
+    tzdata \
     && apt-get clean
 
 RUN python3 --version && python3 -m pip --version
