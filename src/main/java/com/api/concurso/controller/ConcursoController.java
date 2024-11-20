@@ -55,6 +55,9 @@ public class ConcursoController {
                             .body(null);
                 }
             }
+            if (!isLocal) {
+                scriptPath = basePath + "/my-project/src/main/resources/py/PCI.py";
+            }
 
             // Executa o script Python
             System.out.println("Executando o script Python...");
