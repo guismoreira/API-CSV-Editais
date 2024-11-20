@@ -1,13 +1,13 @@
-# Utiliza a imagem base do OpenJDK Temurin
-FROM eclipse-temurin:21-jdk-focal AS build
+# Usando uma imagem base do OpenJDK Temurin disponível
+FROM eclipse-temurin:21-jdk-alpine AS build
 
 # Instala o Python 3.12.7
-RUN apt-get update && apt-get install -y \
-    python3.12 \
-    python3.12-distutils \
-    python3.12-venv \
+RUN apk update && apk add --no-cache \
+    python3 \
+    python3-dev \
+    py3-pip \
     curl \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/cache/apk/*
 
 # Instala o Gradle
 RUN curl -sSL https://get.gradle.org/distributions/gradle-7.6.2-bin.zip -o gradle.zip \
@@ -21,12 +21,12 @@ WORKDIR /app
 # Copia o código da aplicação para o container
 COPY . /app
 
-# Instala dependências Python
-RUN python3.12 -m ensurepip --upgrade && \
-    python3.12 -m pip install --no-cache --upgrade pip
+# Instala dependências Python (caso haja um requirements.txt)
+RUN python3 -m ensurepip --upgrade && \
+    python3 -m pip install --no-cache --upgrade pip
 
 # Se necessário, instale outras dependências Python
-RUN python3.12 -m pip install -r requirements.txt
+RUN python3 -m pip install -r requirements.txt
 
 # Compila o projeto com Gradle
 RUN gradle build
