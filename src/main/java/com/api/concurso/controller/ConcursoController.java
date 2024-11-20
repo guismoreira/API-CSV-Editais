@@ -56,7 +56,7 @@ public class ConcursoController {
                 }
             }
             if (!isLocal) {
-                scriptPath = basePath + "build/resources/main/py/PCI.py";
+                scriptPath = basePath + "/my-project/build/resources/main/py/PCI.py";
             }
 
             // Executa o script Python
