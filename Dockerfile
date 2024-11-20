@@ -1,4 +1,4 @@
-# Usando uma imagem base do OpenJDK Temurin disponível
+# Usando a imagem base do OpenJDK Temurin disponível
 FROM eclipse-temurin:21-jdk-alpine AS build
 
 # Atualiza o apk e instala o Python 3.12.7, curl, unzip e outras dependências necessárias
@@ -11,10 +11,13 @@ RUN apk update && apk add --no-cache \
     bash \
     && rm -rf /var/cache/apk/*
 
-# Atualiza o pip para a versão mais recente (evita problemas com versões antigas)
+# Certifica-se de que o pip está instalado corretamente
+RUN python3 -m ensurepip --upgrade || true
+
+# Atualiza o pip para a versão mais recente
 RUN python3 -m pip install --upgrade pip
 
-# Instala o Gradle usando o repositório Alpine
+# Instala o Gradle
 RUN apk add --no-cache gradle
 
 # Configura o diretório de trabalho
@@ -34,3 +37,4 @@ EXPOSE 8080
 
 # Comando para rodar a aplicação Spring
 CMD ["gradle", "bootRun"]
+
