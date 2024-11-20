@@ -1,21 +1,17 @@
-FROM ubuntu:20.04 AS build
-
-ENV DEBIAN_FRONTEND=noninteractive
+FROM eclipse-temurin:21-jdk-focal
 
 RUN apt-get update && apt-get install -y \
-    openjdk-21-jdk \
     python3 \
     python3-pip \
+    python3-dev \
     curl \
     unzip \
-    bash \
-    gradle \
-    tzdata \
-    && apt-get clean
+    && rm -rf /var/lib/apt/lists/*
 
-RUN python3 --version && python3 -m pip --version
-
-RUN python3 -m pip install --upgrade pip
+RUN curl -sSL https://get.gradle.org/distributions/gradle-7.6.2-bin.zip -o gradle.zip && \
+    unzip gradle.zip -d /opt && \
+    rm gradle.zip && \
+    ln -s /opt/gradle-7.6.2/bin/gradle /usr/bin/gradle
 
 WORKDIR /app
 
@@ -27,4 +23,4 @@ RUN gradle build
 
 EXPOSE 8080
 
-CMD ["gradle", "bootRun"]
+CMD ["java", "-jar", "build/libs/your-application.jar"]
