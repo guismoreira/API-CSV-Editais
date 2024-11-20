@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="fastRequestCurrentParamGroup">
+    <option name="className" value="com.api.concurso.controller.ConcursoController" />
+    <option name="filePath" value="" />
+    <option name="method" value="generateCsv" />
+    <option name="module" value="concurso" />
+    <option name="originUrl" value="/api/csv" />
+    <option name="responseParamMap">
+      <map>
+        <entry key="return">
+          <value>
+            <Object />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="returnDocument" value="{&quot;status&quot;:{},&quot;headers&quot;:{},&quot;body&quot;:{&quot;path&quot;:&quot;No comment,Type =String&quot;,&quot;file&quot;:{&quot;path&quot;:&quot;No comment,Type =String&quot;},&quot;filePath&quot;:{}}}" />
+    <option name="url" value="/api/csv" />
+  </component>
+</project>
