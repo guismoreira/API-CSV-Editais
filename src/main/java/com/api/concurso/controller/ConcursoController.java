@@ -22,57 +22,50 @@ public class ConcursoController {
         return "Hello World!";
     }
 
-    @GetMapping("/csv")
-    public ResponseEntity<FileSystemResource> generateCsv() {
-        // Caminho para os scripts Python
-        String basePath = new File("").getAbsolutePath();
-        String scriptPath = basePath + "/src/main/resources/py/PCI.py";
-        String outputCsvPath = basePath + "./ConcursosAtivos.csv";
+@GetMapping("/csv")
+public ResponseEntity<FileSystemResource> generateCsv() {
+    String basePath = new File("").getAbsolutePath();
+    String scriptPath = basePath + "/src/main/resources/py/PCI.py";
+    String outputCsvPath = basePath + "./ConcursosAtivos.csv";
 
-        try {
-            // Executa o script de geração de CSV (que agora também cuida da instalação das dependências)
-            ProcessBuilder processBuilder = new ProcessBuilder("python", scriptPath);
-            processBuilder.redirectErrorStream(true);
-            Process process = processBuilder.start();
+    try {
+        ProcessBuilder processBuilder = new ProcessBuilder("python", scriptPath);
+        processBuilder.redirectErrorStream(true);
+        Process process = processBuilder.start();
 
-            // Captura a saída do processo de execução do script
-            try (BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println("Geração de CSV: " + line);
-                }
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(process.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println("Geração de CSV: " + line);
             }
+        }
 
-            // Aguarda a execução do script de geração de CSV
-            int exitCode = process.waitFor();
-            if (exitCode != 0) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(null);
-            }
-
-            // Verifica se o arquivo foi gerado
-            File outputFile = new File(outputCsvPath);
-            if (!outputFile.exists()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-
-            // Retorna o arquivo como resposta
-            FileSystemResource resource = new FileSystemResource(outputFile);
-            HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + outputFile.getName());
-            headers.add(HttpHeaders.CONTENT_TYPE, "text/csv");
-
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(resource);
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
-    }
 
+        File outputFile = new File(outputCsvPath);
+        if (!outputFile.exists()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        FileSystemResource resource = new FileSystemResource(outputFile);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + outputFile.getName());
+        headers.add(HttpHeaders.CONTENT_TYPE, "text/csv");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(resource);
+
+    } catch (IOException | InterruptedException e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(null);
+    }
+}
 
 }
