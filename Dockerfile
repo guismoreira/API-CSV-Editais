@@ -8,7 +8,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
-FROM gradle:7.2-jdk21-alpine AS gradle-builder
+WORKDIR /my-project
+CMD ["./gradlew", "clean", "bootJar"]
+COPY build/libs/*.jar app.jar
 
 WORKDIR /app
 
@@ -21,4 +23,4 @@ RUN gradle build
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "build/libs/your-application.jar"]
+CMD ["java", "-jar", "app.jar"]
