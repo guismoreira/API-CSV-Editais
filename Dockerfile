@@ -1,40 +1,27 @@
-# Usando a imagem base do OpenJDK Temurin disponível
-FROM eclipse-temurin:21-jdk-alpine AS build
+FROM ubuntu:20.04 AS build
 
-# Atualiza o apk e instala o Python 3.12.7, curl, unzip e outras dependências necessárias
-RUN apk update && apk add --no-cache \
+RUN apt-get update && apt-get install -y \
+    openjdk-21-jdk \
     python3 \
-    python3-dev \
-    py3-pip \
+    python3-pip \
     curl \
     unzip \
     bash \
-    && rm -rf /var/cache/apk/*
+    gradle \
+    && apt-get clean
 
-# Certifica-se de que o pip está instalado corretamente
-RUN python3 -m ensurepip --upgrade || true
+RUN python3 --version && python3 -m pip --version
 
-# Atualiza o pip para a versão mais recente
 RUN python3 -m pip install --upgrade pip
 
-# Instala o Gradle
-RUN apk add --no-cache gradle
-
-# Configura o diretório de trabalho
 WORKDIR /app
 
-# Copia o código da aplicação para o container
 COPY . /app
 
-# Instala dependências Python (caso haja um requirements.txt)
 RUN if [ -f requirements.txt ]; then python3 -m pip install -r requirements.txt; fi
 
-# Compila o projeto com Gradle
 RUN gradle build
 
-# Expõe a porta que a aplicação Spring usa (geralmente 8080)
 EXPOSE 8080
 
-# Comando para rodar a aplicação Spring
 CMD ["gradle", "bootRun"]
-
