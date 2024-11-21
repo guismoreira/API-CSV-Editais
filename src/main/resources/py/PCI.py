@@ -7,20 +7,6 @@ import pandas as pd
 import requests
 import re
 
-import subprocess
-import sys
-
-def install(package):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-
-packages = ["requests", "beautifulsoup4", "pandas"]
-for package in packages:
-    try:
-        install(package)
-        print(f'{package} instalado com sucesso!')
-    except Exception as e:
-        print(f'Erro ao instalar {package}: {e}')
-
 
 def exam_region(source_code, region):
     # Convert source code to string
