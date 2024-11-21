@@ -54,6 +54,16 @@ public class ConcursoController {
                 }
             }
             if (env.equalsIgnoreCase("prod")) {
+                System.out.println("*********************************************");
+                ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", "ls -l " + "./");
+                Process process = processBuilder.start();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+                System.out.println("Conteúdo do diretório '" + "./" + "':");
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+                System.out.println("*********************************************");
                 System.out.println("Executando em ambiente prod.");
                 scriptPath = basePath + "/my-project/src/main/resources/py/PCI.py";
             }
