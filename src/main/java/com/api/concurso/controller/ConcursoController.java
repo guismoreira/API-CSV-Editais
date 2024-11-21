@@ -52,7 +52,7 @@ public class ConcursoController {
                 }
             }
             if (env.equalsIgnoreCase("prod")) {
-                scriptPath = "my-project/src/main/resources/py/PCI.py";
+                scriptPath = "my-project/build/resources/main/py/PCI.py";
             }
 
             // Executa o script Python
