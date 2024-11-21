@@ -31,9 +31,6 @@ public class ConcursoController {
         String env = dotenv.get("ENV_VAR");
 
         try {
-
-
-            assert env != null;
             if (env.equalsIgnoreCase("local")) {
                 System.out.println("Executando em ambiente local. Instalando dependências...");
                 ProcessBuilder installBuilder = new ProcessBuilder(
@@ -57,7 +54,8 @@ public class ConcursoController {
                 }
             }
             if (env.equalsIgnoreCase("prod")) {
-                scriptPath = basePath + "/build/resources/main/py/PCI.py";
+                System.out.println("Executando em ambiente prod.");
+                scriptPath = basePath + "/my-project/src/main/resources/py/PCI.py";
             }
 
             System.out.println("Executando o script Python...");
