@@ -65,7 +65,7 @@ public class ConcursoController {
                 }
                 System.out.println("*********************************************");
                 System.out.println("Executando em ambiente prod.");
-                scriptPath = basePath + "/my-project/src/main/resources/py/PCI.py";
+                scriptPath = "./src/main/resources/py/PCI.py";
             }
 
             System.out.println("Executando o script Python...");
