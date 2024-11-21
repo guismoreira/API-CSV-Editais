@@ -57,7 +57,7 @@ public class ConcursoController {
 
             // Executa o script Python
             System.out.println("Executando o script Python...");
-            ProcessBuilder processBuilder = new ProcessBuilder("python -c", scriptPath);
+            ProcessBuilder processBuilder = new ProcessBuilder("python -c", "print(1 + 1)");
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
 
