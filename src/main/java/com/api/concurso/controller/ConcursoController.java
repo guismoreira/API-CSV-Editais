@@ -57,7 +57,7 @@ public class ConcursoController {
                 }
             }
             if (env.equalsIgnoreCase("prod")) {
-                scriptPath = "my-project/build/resources/main/py/PCI.py";
+                scriptPath = basePath + "/build/resources/main/py/PCI.py";
             }
 
             System.out.println("Executando o script Python...");

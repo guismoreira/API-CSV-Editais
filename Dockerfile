@@ -18,8 +18,6 @@ RUN python3 -m venv /venv && \
 
 RUN chmod +x ./gradlew && ./gradlew clean build
 
-ENV ENV_VAR=prod
-
 EXPOSE 8080
 
 CMD ["java", "-jar", "build/libs/concurso-0.0.1-SNAPSHOT.jar"]
