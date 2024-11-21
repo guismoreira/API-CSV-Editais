@@ -55,11 +55,11 @@ public class ConcursoController {
             }
             if (env.equalsIgnoreCase("prod")) {
                 System.out.println("*********************************************");
-                ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", "ls -l " + "./");
+                ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", "ls -l " + "./src/main/resources/py");
                 Process process = processBuilder.start();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 String line;
-                System.out.println("Conteúdo do diretório '" + "./" + "':");
+                System.out.println("Conteúdo do diretório '" + "./src/main/resources/py" + "':");
                 while ((line = reader.readLine()) != null) {
                     System.out.println(line);
                 }
