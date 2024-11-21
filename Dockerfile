@@ -18,7 +18,7 @@ RUN python3 -m venv /venv && \
 
 RUN chmod +x ./gradlew && ./gradlew clean build
 
-ENV ENVIRONMENT=prod
+ENV ENV_VAR=prod
 
 EXPOSE 8080
 
