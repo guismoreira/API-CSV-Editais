@@ -51,13 +51,13 @@ public class ConcursoController {
                             .body(null);
                 }
             }
-            if (!isLocal) {
-                scriptPath = "print(1 + 1)";
+            if (env.equalsIgnoreCase("prod")) {
+                scriptPath = "my-project/src/main/resources/py/PCI.py";
             }
 
             // Executa o script Python
             System.out.println("Executando o script Python...");
-            ProcessBuilder processBuilder = new ProcessBuilder("python -c", "print(1 + 1)");
+            ProcessBuilder processBuilder = new ProcessBuilder("python", scriptPath);
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
 
