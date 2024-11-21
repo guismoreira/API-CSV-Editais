@@ -29,6 +29,7 @@ public class ConcursoController {
         String outputCsvPath = basePath + "/ConcursosAtivos.csv";
         Dotenv dotenv = Dotenv.load();
         String env = dotenv.get("ENV_VAR");
+        ProcessBuilder processBuilder = null;
 
         try {
             if (env.equalsIgnoreCase("local")) {
@@ -46,20 +47,20 @@ public class ConcursoController {
                         System.out.println("Instalação de dependências: " + line);
                     }
                 }
-
                 int installExitCode = installProcess.waitFor();
                 if (installExitCode != 0) {
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                             .body(null);
                 }
+                processBuilder = new ProcessBuilder("python3", scriptPath);
             }
             if (env.equalsIgnoreCase("prod")) {
                 System.out.println("Executando em ambiente prod.");
                 scriptPath = "./src/main/resources/py/PCI.py";
+                processBuilder = new ProcessBuilder("/venv/bin/python3", scriptPath);
             }
 
-            System.out.println("Executando o script Python...");
-            ProcessBuilder processBuilder = new ProcessBuilder("python3", scriptPath);
+            assert processBuilder != null;
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
 
