@@ -24,6 +24,7 @@ repositories {
 }
 
 dependencies {
+	implementation("io.github.cdimascio:dotenv-java:3.0.2")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.python:jython-standalone:2.7.4")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")

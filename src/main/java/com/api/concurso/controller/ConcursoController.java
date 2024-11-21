@@ -1,6 +1,10 @@
 package com.api.concurso.controller;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.python.util.PythonInterpreter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,13 +27,14 @@ public class ConcursoController {
         String basePath = new File("").getAbsolutePath();
         String scriptPath = basePath + "/src/main/resources/py/PCI.py";
         String outputCsvPath = basePath + "/ConcursosAtivos.csv";
+        Dotenv dotenv = Dotenv.load();
+        String env = dotenv.get("ENV_VAR");
 
         try {
-            // Verifica se está em ambiente local (exemplo usando uma variável de ambiente)
-            String env = System.getenv("ENVIRONMENT");
-            boolean isLocal = (env == null || env.equalsIgnoreCase("local"));
 
-            if (isLocal) {
+
+            assert env != null;
+            if (env.equalsIgnoreCase("local")) {
                 System.out.println("Executando em ambiente local. Instalando dependências...");
                 ProcessBuilder installBuilder = new ProcessBuilder(
                         "python", "-m", "pip", "install", "--upgrade", "pip",
@@ -55,7 +60,6 @@ public class ConcursoController {
                 scriptPath = "my-project/build/resources/main/py/PCI.py";
             }
 
-            // Executa o script Python
             System.out.println("Executando o script Python...");
             ProcessBuilder processBuilder = new ProcessBuilder("python", scriptPath);
             processBuilder.redirectErrorStream(true);
@@ -75,7 +79,6 @@ public class ConcursoController {
                         .body(null);
             }
 
-            // Verifica se o arquivo foi gerado
             File outputFile = new File(outputCsvPath);
             if (!outputFile.exists()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
