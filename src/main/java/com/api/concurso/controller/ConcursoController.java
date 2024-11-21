@@ -1,7 +1,6 @@
 package com.api.concurso.controller;
 
 import org.python.util.PythonInterpreter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,9 +17,6 @@ import java.io.InputStreamReader;
 @RestController
 @RequestMapping("/api")
 public class ConcursoController {
-
-    @Value("${py.file}")
-    private FileSystemResource pyFile;
 
     @GetMapping("/csv")
     public ResponseEntity<FileSystemResource> generateCsv() {
@@ -56,7 +52,7 @@ public class ConcursoController {
                 }
             }
             if (!isLocal) {
-                scriptPath = String.valueOf(pyFile);
+                scriptPath = "my-project/build/resources/main/py/PCI.py";
             }
 
             // Executa o script Python
