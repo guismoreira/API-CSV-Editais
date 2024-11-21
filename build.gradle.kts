@@ -24,6 +24,8 @@ repositories {
 }
 
 dependencies {
+	implementation("org.apache.commons:commons-csv:1.12.0")
+	implementation("org.jsoup:jsoup:1.18.1")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.python:jython-standalone:2.7.4")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")

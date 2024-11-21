@@ -17,10 +17,6 @@ import java.io.InputStreamReader;
 @RestController
 @RequestMapping("/api")
 public class ConcursoController {
-    @GetMapping
-    public String helloWorld(){
-        return "Hello World!";
-    }
 
     @GetMapping("/csv")
     public ResponseEntity<FileSystemResource> generateCsv() {
